@@ -27,7 +27,8 @@ const todos = [
 /**
  * Renders list of todo items
  *
- * @param {{ items: Todo[]}} props - List of todo items
+ * @param {Object} params - List of todo items
+ * @param {Todo[]} params.items - List of todo items
  */
 function ItemsList({ items }) {
   return (
