@@ -7,10 +7,14 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
+    "check": "biome check --write .",
     "dev": "vite",
+    "format": "biome format --write .",
+    "lint": "biome lint --write .",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/node": "22.10.5",
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
