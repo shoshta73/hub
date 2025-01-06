@@ -12,18 +12,57 @@
     "dev": "vite",
     "format": "biome format --write .",
     "lint": "biome lint --write .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "release": "release-it",
+    "release:check": "release-it --dry-run"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@release-it/conventional-changelog": "9.0.4",
     "@types/node": "22.10.5",
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
     "@vitejs/plugin-react-swc": "3.7.2",
+    "release-it": "17.11.0",
     "vite": "6.0.7"
   },
   "dependencies": {
     "react": "19.0.0",
     "react-dom": "19.0.0"
+  },
+  "release-it": {
+    "git": {
+      "changelog": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
+      "commitMessage": "chore: release v${version}",
+      "tagName": "v${version}",
+      "push": false
+    },
+    "github": {
+      "release": false
+    },
+    "npm": {
+      "publish": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "conventionalcommits",
+        "infile": "CHANGELOG.md",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "perf",
+            "section": "Performance Improvements"
+          },
+          {}
+        ]
+      }
+    }
   }
 }
