@@ -14,5 +14,5 @@ const rootElement = createRoot(root);
 rootElement.render(
   <StrictMode>
     <App />
-  </StrictMode>
+  </StrictMode>,
 );
