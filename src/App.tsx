@@ -1,24 +1,94 @@
-import { type FormEvent, useRef, useState } from "react";
+import type { FormEvent, JSX } from "react";
+import { useRef } from "react";
+import { create } from "zustand";
 
+/**
+ * Type for item representation
+ */
 type Todo = {
+  /**
+   * Title of the todo item
+   */
   title: string;
+
+  /**
+   * 0 - pending
+   * 1 - paused
+   * 2 - completed
+   */
   status: number;
+
+  /**
+   * Unique identifier
+   */
   id: string;
 };
 
 /**
+ * Type for app state storage
+ */
+type State = {
+  /**
+   * List of todo items
+   */
+  todos: Todo[];
+};
+
+/**
+ * Type for app actions
+ */
+type Actions = {
+  /**
+   * Adds new todo item to the list
+   *
+   * @param {Todo} todo - Todo item to add
+   * @returns {void}
+   */
+  addTodo: (todo: Todo) => void;
+};
+
+/**
+ * Creates a store for app state and actions
+ *
+ * @returns State and actions
+ */
+const useStateStore = create<State & Actions>()((set) => ({
+  todos: [
+    {
+      title: "Buy milk",
+      status: 0,
+      id: "1",
+    },
+    {
+      title: "Buy bread",
+      status: 0,
+      id: "2",
+    },
+    {
+      title: "Buy eggs",
+      status: 0,
+      id: "3",
+    },
+  ],
+  addTodo: (todo: Todo): void => {
+    set((state) => ({
+      todos: [...state.todos, todo],
+    }));
+  },
+}));
+
+/**
  * Renders list of todo items
  *
- * @param {Object} params - List of todo items
- * @param {Todo[]} params.items - List of todo items
+ * @param items - List of todo items
  *
- * @returns {React.JSX.Element}
+ * @returns Rendered list of todo items
  */
 function ItemsList({
   items,
 }: {
   items: Todo[];
-}): React.JSX.Element {
+}): JSX.Element {
   return (
     <div>
       {items.map((item) => (
@@ -34,17 +104,16 @@ function ItemsList({
  * It will throw an error if addTodo function is not provided
  * as a prop, with error message "addTodo function is required"
  *
- * @param {Object} props - Form props
- * @param {(Todo) => void} props.addTodo - Function for adding new todo item
+ * @param addTodo - Function for adding new todo item
  *
- * @returns {React.JSX.Element}
- * @throws {Error} addTodo function is required
+ * @returns Rendered form
+ * @throws Error with message "addTodo function is required"
  */
 function AddItemForm({
   addTodo,
 }: {
   addTodo: (todo: Todo) => void;
-}): React.JSX.Element {
+}): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (!addTodo) {
@@ -78,33 +147,7 @@ function AddItemForm({
 }
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([
-    {
-      title: "Buy milk",
-      status: 0,
-      id: "1",
-    },
-    {
-      title: "Buy bread",
-      status: 0,
-      id: "2",
-    },
-    {
-      title: "Buy eggs",
-      status: 0,
-      id: "3",
-    },
-  ]);
-
-  /**
-   * Adds new todo item to the list
-   *
-   * @param {Todo} todo - Todo item to add
-   * @returns {void}
-   */
-  const addTodo = (todo: Todo): void => {
-    setTodos((prevTodos) => [...prevTodos, todo]);
-  };
+  const { todos, addTodo } = useStateStore();
 
   return (
     <div>
