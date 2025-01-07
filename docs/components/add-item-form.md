@@ -2,24 +2,48 @@
 
 This component is used to add a new todo item.
 
+## Parameters
+
+- `addTodo`: A function that adds a new todo item to the list.
+
+```ts
+interface params {
+  addTodo: (todo: Todo) => void;
+}
+```
+
 ## Declaration
 
 ```ts
-function AddItemForm(): React.JSX.Element
+function AddItemForm({ addTodo }: {
+    addTodo: () => void;
+}): React.JSX.Element
 ```
 
 ## Usage
 
 ```jsx
-<AddItemForm />
+const addTodo = (todo) => {
+  todos = [...todos, todo];
+};
+
+<AddItemForm addTodo={addTodo} />
 ```
 
 ## Definition
 
 ```jsx
-function AddItemForm() {
+/**
+ * @param {Object} props - Form props
+ * @param {() => void} props.addTodo - Function for adding new todo item
+ */
+function AddItemForm({ addTodo }) {
   /** @type {React.RefObject<HTMLInputElement>} @default null */
   const inputRef = useRef(null);
+
+  if (!addTodo) {
+    throw new Error("addTodo function is required");
+  }
 
   /**
    * @param {React.FormEvent<HTMLFormElement>} e - Form event
@@ -28,15 +52,13 @@ function AddItemForm() {
     e.preventDefault();
     const title = inputRef.current.value;
 
-    todos.push({
+    addTodo({
       title,
       status: 0,
-      id: (todos.length + 1).toString(),
+      id: new Date().getTime().toString(),
     });
 
     inputRef.current.value = "";
-
-    console.log(todos);
   };
 
   return (
