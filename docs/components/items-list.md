@@ -1,4 +1,4 @@
-# TodoList
+# ItemsList
 
 This component is used to display a list of todos.
 

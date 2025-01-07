@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 /**
  * @typedef {Object} Todo - Todo object
  * @property {string} title - Todo title
@@ -40,10 +42,45 @@ function ItemsList({ items }) {
   );
 }
 
+/**
+ * Renders form for adding new todo item
+ */
+function AddItemForm() {
+  /** @type {React.RefObject<HTMLInputElement>} @default null */
+  const inputRef = useRef(null);
+
+  /**
+   * Handles form submit
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - Form event
+   */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const title = inputRef.current.value;
+
+    todos.push({
+      title,
+      status: 0,
+      id: (todos.length + 1).toString(),
+    });
+
+    inputRef.current.value = "";
+
+    console.log(todos);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input ref={inputRef} type="text" placeholder="Enter todo title" />
+      <button type="submit">Add</button>
+    </form>
+  );
+}
+
 function App() {
   return (
     <div>
-      <h1>Todo list</h1>
+      <AddItemForm />
       <ItemsList items={todos} />
     </div>
   );
