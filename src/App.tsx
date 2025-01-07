@@ -2,6 +2,9 @@ import type { FormEvent, JSX } from "react";
 import { useRef } from "react";
 import { create } from "zustand";
 
+// @ts-expect-error TS2307 - Cannot find module x or its corresponding type declarations. ITS CSS not module
+import "./App.css";
+
 /**
  * Type for item representation
  */
@@ -139,9 +142,17 @@ function AddItemForm({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input ref={inputRef} type="text" placeholder="Enter todo title" />
-      <button type="submit">Add</button>
+    <form className="add-item-form flex flex-row" onSubmit={handleSubmit}>
+      <input
+        className="flex"
+        ref={inputRef}
+        type="text"
+        placeholder="Enter todo title"
+      />
+      <div id="add-item-form-spacer" className="flex-1" />
+      <button type="submit" className="button flex m-auto">
+        Add
+      </button>
     </form>
   );
 }
