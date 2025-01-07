@@ -7,7 +7,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "check": "biome check --write .",
     "dev": "vite",
     "docs:jsdoc": "jsdoc -c jsdoc.conf.json -r src -d docs/jsdoc",
@@ -26,6 +26,7 @@
     "@vitejs/plugin-react-swc": "3.7.2",
     "jsdoc": "4.0.4",
     "release-it": "17.11.0",
+    "typescript": "5.7.2",
     "vite": "6.0.7"
   },
   "dependencies": {

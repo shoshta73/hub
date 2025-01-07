@@ -1,11 +1,10 @@
-import { useRef, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 
-/**
- * @typedef {Object} Todo - Todo object
- * @property {string} title - Todo title
- * @property {number} status - Todo status (0: pending, 1: paused, 2: done)
- * @property {string} id - Todo id
- */
+type Todo = {
+  title: string;
+  status: number;
+  id: string;
+};
 
 /**
  * Renders list of todo items
@@ -15,7 +14,11 @@ import { useRef, useState } from "react";
  *
  * @returns {React.JSX.Element}
  */
-function ItemsList({ items }) {
+function ItemsList({
+  items,
+}: {
+  items: Todo[];
+}): React.JSX.Element {
   return (
     <div>
       {items.map((item) => (
@@ -32,26 +35,29 @@ function ItemsList({ items }) {
  * as a prop, with error message "addTodo function is required"
  *
  * @param {Object} props - Form props
- * @param {() => void} props.addTodo - Function for adding new todo item
+ * @param {(Todo) => void} props.addTodo - Function for adding new todo item
  *
  * @returns {React.JSX.Element}
  * @throws {Error} addTodo function is required
  */
-function AddItemForm({ addTodo }) {
-  /** @type {React.RefObject<HTMLInputElement>} @default null */
-  const inputRef = useRef(null);
+function AddItemForm({
+  addTodo,
+}: {
+  addTodo: (todo: Todo) => void;
+}): React.JSX.Element {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   if (!addTodo) {
     throw new Error("addTodo function is required");
   }
 
-  /**
-   * Handles form submit
-   *
-   * @param {React.FormEvent<HTMLFormElement>} e - Form event
-   */
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!inputRef.current) {
+      return;
+    }
+
     const title = inputRef.current.value;
 
     addTodo({
@@ -72,10 +78,7 @@ function AddItemForm({ addTodo }) {
 }
 
 function App() {
-  /**
-   * @type {[Todo[], React.Dispatch<React.SetStateAction<Todo[]>>]}
-   */
-  const [todos, setTodos] = useState([
+  const [todos, setTodos] = useState<Todo[]>([
     {
       title: "Buy milk",
       status: 0,
@@ -99,7 +102,7 @@ function App() {
    * @param {Todo} todo - Todo item to add
    * @returns {void}
    */
-  const addTodo = (todo) => {
+  const addTodo = (todo: Todo): void => {
     setTodos((prevTodos) => [...prevTodos, todo]);
   };
 
