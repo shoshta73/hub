@@ -3,6 +3,9 @@ import App from "./App";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+// @ts-expect-error TS2307 - Cannot find module x or its corresponding type declarations. ITS CSS not module
+import "./preflight.css";
+
 let root = document.getElementById("app");
 if (root === null) {
   root = document.createElement("div");
