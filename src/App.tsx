@@ -2,7 +2,7 @@ import type { FormEvent, JSX } from "react";
 import { useRef } from "react";
 import { create } from "zustand";
 
-import type { Todo, StateStore } from "./types";
+import { type Todo, type StateStore, isTodoStatus } from "./types";
 
 /**
  * Creates a store for app state and actions
@@ -35,6 +35,28 @@ const useStateStore = create<StateStore>()((set) => ({
 }));
 
 /**
+ * Renders todo item
+ *
+ * If todo item status is invalid, it will throw an error with message "Invalid todo status"
+ *
+ * @param item - Todo item
+ *
+ * @returns Rendered todo item
+ * @throws Error with message "Invalid todo status"
+ */
+function Item({ item }: { item: Todo }) {
+  if (!isTodoStatus(item.status)) {
+    throw new Error("Invalid todo status");
+  }
+
+  return (
+    <div className="mb-2 flex flex-row border-gray-500 border-y bg-gray-100 p-2 dark:bg-gray-900">
+      <div>{item.title}</div>
+    </div>
+  );
+}
+
+/**
  * Renders list of todo items
  *
  * @param items - List of todo items
@@ -49,7 +71,7 @@ function ItemsList({
   return (
     <div>
       {items.map((item) => (
-        <div key={item.id}>{item.title}</div>
+        <Item key={item.id} item={item} />
       ))}
     </div>
   );
@@ -98,13 +120,13 @@ function AddItemForm({
   return (
     <form className="mb-4 flex flex-row border-gray-500 border-b px-2" onSubmit={handleSubmit}>
       <input
-        className="my-1 flex h-16 min-w-[60%] text-2xl"
+        className="my-2 flex h-16 min-w-[60%] bg-gray-100 px-2 text-2xl text-gray-800 focus:outline-none dark:bg-gray-900 dark:text-gray-200"
         ref={inputRef}
         type="text"
         placeholder="Enter todo title"
       />
       <div id="add-item-form-spacer" className="flex-1 border-gray-500 border-r" />
-      <button type="submit" className="my-1 ml-2 flex h-16 min-w-16 items-center justify-center">
+      <button type="submit" className="my-2 ml-2 flex h-16 min-w-16 items-center justify-center">
         Add
       </button>
     </form>

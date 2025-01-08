@@ -1,3 +1,13 @@
+enum TodoStatus {
+  Pending = 0,
+  Paused = 1,
+  Completed = 2,
+}
+
+export function isTodoStatus(status: number): status is TodoStatus {
+  return status >= 0 && status <= 2;
+}
+
 /**
  * Type for item representation
  */
@@ -12,7 +22,7 @@ export type Todo = {
    * 1 - paused
    * 2 - completed
    */
-  status: number;
+  status: TodoStatus;
 
   /**
    * Unique identifier
