@@ -2,57 +2,14 @@ import type { FormEvent, JSX } from "react";
 import { useRef } from "react";
 import { create } from "zustand";
 
-/**
- * Type for item representation
- */
-type Todo = {
-  /**
-   * Title of the todo item
-   */
-  title: string;
-
-  /**
-   * 0 - pending
-   * 1 - paused
-   * 2 - completed
-   */
-  status: number;
-
-  /**
-   * Unique identifier
-   */
-  id: string;
-};
-
-/**
- * Type for app state storage
- */
-type State = {
-  /**
-   * List of todo items
-   */
-  todos: Todo[];
-};
-
-/**
- * Type for app actions
- */
-type Actions = {
-  /**
-   * Adds new todo item to the list
-   *
-   * @param {Todo} todo - Todo item to add
-   * @returns {void}
-   */
-  addTodo: (todo: Todo) => void;
-};
+import type { Todo, StateStore } from "./types";
 
 /**
  * Creates a store for app state and actions
  *
  * @returns State and actions
  */
-const useStateStore = create<State & Actions>()((set) => ({
+const useStateStore = create<StateStore>()((set) => ({
   todos: [
     {
       title: "Buy milk",
