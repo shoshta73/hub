@@ -1,30 +1,9 @@
 import type { FormEvent, JSX } from "react";
 import { useRef } from "react";
 
-import { type Todo, isTodoStatus } from "./types";
+import type { Todo } from "./types";
 import { useStateStore } from "./stores";
-
-/**
- * Renders todo item
- *
- * If todo item status is invalid, it will throw an error with message "Invalid todo status"
- *
- * @param item - Todo item
- *
- * @returns Rendered todo item
- * @throws Error with message "Invalid todo status"
- */
-function Item({ item }: { item: Todo }) {
-  if (!isTodoStatus(item.status)) {
-    throw new Error("Invalid todo status");
-  }
-
-  return (
-    <div className="mb-2 flex flex-row border-gray-500 border-y bg-gray-100 p-2 dark:bg-gray-900">
-      <div>{item.title}</div>
-    </div>
-  );
-}
+import Item from "./Components/Item";
 
 /**
  * Renders list of todo items
