@@ -1,38 +1,8 @@
 import type { FormEvent, JSX } from "react";
 import { useRef } from "react";
-import { create } from "zustand";
 
-import { type Todo, type StateStore, isTodoStatus } from "./types";
-
-/**
- * Creates a store for app state and actions
- *
- * @returns State and actions
- */
-const useStateStore = create<StateStore>()((set) => ({
-  todos: [
-    {
-      title: "Buy milk",
-      status: 0,
-      id: "1",
-    },
-    {
-      title: "Buy bread",
-      status: 0,
-      id: "2",
-    },
-    {
-      title: "Buy eggs",
-      status: 0,
-      id: "3",
-    },
-  ],
-  addTodo: (todo: Todo): void => {
-    set((state) => ({
-      todos: [...state.todos, todo],
-    }));
-  },
-}));
+import { type Todo, isTodoStatus } from "./types";
+import { useStateStore } from "./stores";
 
 /**
  * Renders todo item
