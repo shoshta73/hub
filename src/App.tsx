@@ -3,28 +3,7 @@ import { useRef } from "react";
 
 import type { Todo } from "./types";
 import { useStateStore } from "./stores";
-import Item from "./Components/Item";
-
-/**
- * Renders list of todo items
- *
- * @param items - List of todo items
- *
- * @returns Rendered list of todo items
- */
-function ItemsList({
-  items,
-}: {
-  items: Todo[];
-}): JSX.Element {
-  return (
-    <div>
-      {items.map((item) => (
-        <Item key={item.id} item={item} />
-      ))}
-    </div>
-  );
-}
+import ItemsList from "./Components/ItemList";
 
 /**
  * Renders form for adding new todo item
