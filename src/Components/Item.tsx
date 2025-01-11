@@ -1,4 +1,4 @@
-import { CheckIcon, PauseIcon } from "lucide-react";
+import { CheckIcon, PauseIcon, RotateCcwIcon } from "lucide-react";
 import { isTodoStatus, TodoStatus, type Todo } from "../types";
 import classNames from "classnames";
 import { useStateStore } from "../stores";
@@ -16,6 +16,7 @@ import { useStateStore } from "../stores";
 export default function Item({ item }: { item: Todo }) {
   const completeItem = useStateStore().completeTodo;
   const pauseItem = useStateStore().pauseTodo;
+  const resumeItem = useStateStore().resumeTodo;
 
   if (!isTodoStatus(item.status)) {
     throw new Error("Invalid todo status");
@@ -32,6 +33,17 @@ export default function Item({ item }: { item: Todo }) {
     <div className={itemClassName}>
       <div>{item.title}</div>
       <div id="item-spacer" className="flex-1" />
+      {item.status !== TodoStatus.Pending && (
+        <button
+          id={`resume-item-${item.id}`}
+          title={"Resume"}
+          type="button"
+          onClick={() => resumeItem(item.id)}
+          className="text-orange-500"
+        >
+          <RotateCcwIcon className="mx-2 h-8 w-8" />
+        </button>
+      )}
       {item.status !== TodoStatus.Paused && item.status !== TodoStatus.Completed && (
         <button
           id={`pause-item-${item.id}`}

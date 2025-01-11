@@ -31,6 +31,13 @@ export const useStateStore = create<StateStore>()(
           ),
         }));
       },
+      resumeTodo: (id: string): void => {
+        set((state) => ({
+          todos: state.todos.map((item) =>
+            item.id === id ? { ...item, updatedAt: new Date().getTime(), status: TodoStatus.Pending } : item,
+          ),
+        }));
+      },
     }),
     {
       name: "state",

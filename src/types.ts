@@ -77,6 +77,14 @@ type Actions = {
    * @returns {void}
    */
   pauseTodo: (id: string) => void;
+
+  /**
+   * Resumes todo item with given id
+   *
+   * @param {string} id - Id of the todo item to resume
+   * @returns {void}
+   */
+  resumeTodo: (id: string) => void;
 };
 
 /**
