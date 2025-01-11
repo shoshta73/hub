@@ -27,7 +27,7 @@ export default function Item({ item }: { item: Todo }) {
     "mb-2 flex flex-row border-gray-500 border-y bg-gray-100 p-2 dark:bg-gray-900 text-xl font-bold min-h-16 items-center": true,
     "text-green-500": item.status === TodoStatus.Completed,
     "text-yellow-500": item.status === TodoStatus.Paused,
-    "text-scarlet-500": item.status === TodoStatus.Pending,
+    "text-red-500": item.status === TodoStatus.Pending,
   });
 
   return (
@@ -39,7 +39,7 @@ export default function Item({ item }: { item: Todo }) {
         title={"Delete"}
         type="button"
         onClick={() => deleteItem(item.id)}
-        className="text-scarlet-500"
+        className="text-red-500"
       >
         <TrashIcon className="mx-2 h-8 w-8" />
       </button>
