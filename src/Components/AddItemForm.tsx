@@ -2,6 +2,7 @@ import type { FormEvent, JSX } from "react";
 import { useRef } from "react";
 
 import type { Todo } from "../types";
+import { PlusIcon } from "lucide-react";
 
 /**
  * Renders form for adding new todo item
@@ -52,8 +53,12 @@ export default function AddItemForm({
         placeholder="Enter todo title"
       />
       <div id="add-item-form-spacer" className="flex-1 border-gray-500 border-r" />
-      <button type="submit" className="my-2 ml-2 flex h-16 min-w-16 items-center justify-center">
-        Add
+      <button
+        type="submit"
+        className="my-2 ml-2 flex h-16 min-w-16 items-center justify-center"
+        title="Add item button"
+      >
+        <PlusIcon className="h-8 w-8" />
       </button>
     </form>
   );
