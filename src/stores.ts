@@ -19,7 +19,9 @@ export const useStateStore = create<StateStore>()(
       },
       completeTodo: (id: string): void => {
         set((state) => ({
-          todos: state.todos.map((item) => (item.id === id ? { ...item, status: TodoStatus.Completed } : item)),
+          todos: state.todos.map((item) =>
+            item.id === id ? { ...item, updatedAt: new Date().getTime(), status: TodoStatus.Completed } : item,
+          ),
         }));
       },
     }),

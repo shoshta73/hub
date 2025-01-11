@@ -25,6 +25,16 @@ export type Todo = {
   status: TodoStatus;
 
   /**
+   * Timestamp of the creation
+   */
+  createdAt: number;
+
+  /**
+   * Timestamp of the last update
+   */
+  updatedAt: number;
+
+  /**
    * Unique identifier
    */
   id: string;

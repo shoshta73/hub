@@ -3,6 +3,7 @@ import { useRef } from "react";
 
 import type { Todo } from "../types";
 import { PlusIcon } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Renders form for adding new todo item
@@ -35,10 +36,14 @@ export default function AddItemForm({
 
     const title = inputRef.current.value;
 
+    const timeNow = new Date().getTime();
+
     addTodo({
       title,
       status: 0,
-      id: new Date().getTime().toString(),
+      createdAt: timeNow,
+      updatedAt: timeNow,
+      id: uuidv4(),
     });
 
     inputRef.current.value = "";
