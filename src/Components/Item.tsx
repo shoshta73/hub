@@ -1,4 +1,4 @@
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, PauseIcon } from "lucide-react";
 import { isTodoStatus, TodoStatus, type Todo } from "../types";
 import classNames from "classnames";
 import { useStateStore } from "../stores";
@@ -15,6 +15,8 @@ import { useStateStore } from "../stores";
  */
 export default function Item({ item }: { item: Todo }) {
   const completeItem = useStateStore().completeTodo;
+  const pauseItem = useStateStore().pauseTodo;
+
   if (!isTodoStatus(item.status)) {
     throw new Error("Invalid todo status");
   }
@@ -30,6 +32,17 @@ export default function Item({ item }: { item: Todo }) {
     <div className={itemClassName}>
       <div>{item.title}</div>
       <div id="item-spacer" className="flex-1" />
+      {item.status !== TodoStatus.Paused && item.status !== TodoStatus.Completed && (
+        <button
+          id={`pause-item-${item.id}`}
+          title={"Pause"}
+          type="button"
+          onClick={() => pauseItem(item.id)}
+          className="text-yellow-500"
+        >
+          <PauseIcon className="mx-2 h-8 w-8" />
+        </button>
+      )}
       {item.status !== TodoStatus.Completed && (
         <button
           id={`complete-item-${item.id}`}
@@ -38,7 +51,7 @@ export default function Item({ item }: { item: Todo }) {
           onClick={() => completeItem(item.id)}
           className="text-green-500"
         >
-          <CheckIcon className="h-8 w-8" />
+          <CheckIcon className="mx-2 h-8 w-8" />
         </button>
       )}
     </div>

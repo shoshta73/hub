@@ -24,6 +24,13 @@ export const useStateStore = create<StateStore>()(
           ),
         }));
       },
+      pauseTodo: (id: string): void => {
+        set((state) => ({
+          todos: state.todos.map((item) =>
+            item.id === id ? { ...item, updatedAt: new Date().getTime(), status: TodoStatus.Paused } : item,
+          ),
+        }));
+      },
     }),
     {
       name: "state",
