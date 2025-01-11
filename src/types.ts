@@ -51,6 +51,14 @@ type Actions = {
    * @returns {void}
    */
   addTodo: (todo: Todo) => void;
+
+  /**
+   * Completes todo item with given id
+   *
+   * @param {string} id - Id of the todo item to complete
+   * @returns {void}
+   */
+  completeTodo: (id: string) => void;
 };
 
 /**
