@@ -1,4 +1,4 @@
-enum TodoStatus {
+export enum TodoStatus {
   Pending = 0,
   Paused = 1,
   Completed = 2,
