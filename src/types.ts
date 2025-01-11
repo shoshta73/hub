@@ -48,7 +48,7 @@ export type Todo = {
 /**
  * Type for app state storage
  */
-type State = {
+export type State = {
   /**
    * List of todo items
    */
@@ -59,6 +59,8 @@ type State = {
    */
   themeMode: ThemeMode;
 };
+
+export type StateRepresentation = { state: State; version: number };
 
 /**
  * Type for app actions

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { type Todo, type StateStore, TodoStatus, ThemeMode } from "./types";
+import { type Todo, type StateStore, TodoStatus, ThemeMode, type StateRepresentation } from "./types";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 /**
@@ -11,6 +11,14 @@ import { createJSONStorage, persist } from "zustand/middleware";
 export const useStateStore = create<StateStore>()(
   persist(
     (set) => {
+      const savedStateRepresentation: StateRepresentation = (() => {
+        const serializedState = localStorage.getItem("state");
+        if (serializedState === null) {
+          return null;
+        }
+        return JSON.parse(serializedState);
+      })();
+
       const themeMode: ThemeMode = (() => {
         if (window.matchMedia) {
           if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -21,9 +29,13 @@ export const useStateStore = create<StateStore>()(
         return ThemeMode.Dark;
       })();
 
-      return {
+      const state = savedStateRepresentation?.state ?? {
         todos: [],
         themeMode: themeMode,
+      };
+
+      return {
+        ...state,
         addTodo: (todo: Todo): void => {
           set((state) => {
             return {
