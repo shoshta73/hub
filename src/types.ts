@@ -4,6 +4,11 @@ export enum TodoStatus {
   Completed = 2,
 }
 
+export enum ThemeMode {
+  Light = "light",
+  Dark = "dark",
+}
+
 export function isTodoStatus(status: number): status is TodoStatus {
   return status >= 0 && status <= 2;
 }
@@ -48,6 +53,11 @@ type State = {
    * List of todo items
    */
   todos: Todo[];
+
+  /**
+   * Current theme mode
+   */
+  themeMode: ThemeMode;
 };
 
 /**
@@ -93,6 +103,13 @@ type Actions = {
    * @returns {void}
    */
   deleteTodo: (id: string) => void;
+
+  /**
+   * Toggles theme mode
+   *
+   * @returns {void}
+   */
+  toggleThemeMode: () => void;
 };
 
 /**
