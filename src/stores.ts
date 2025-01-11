@@ -38,6 +38,20 @@ export const useStateStore = create<StateStore>()(
           ),
         }));
       },
+      deleteTodo: (id: string): void => {
+        set((state) => ({
+          todos: (() => {
+            const newTodos: Todo[] = [];
+            for (let i = 0; i < state.todos.length; i++) {
+              const todo = state.todos[i];
+              if (todo.id !== id) {
+                newTodos.push(todo);
+              }
+            }
+            return newTodos;
+          })(),
+        }));
+      },
     }),
     {
       name: "state",

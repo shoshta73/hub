@@ -85,6 +85,14 @@ type Actions = {
    * @returns {void}
    */
   resumeTodo: (id: string) => void;
+
+  /**
+   * Deletes todo item with given id
+   *
+   * @param {string} id - Id of the todo item to delete
+   * @returns {void}
+   */
+  deleteTodo: (id: string) => void;
 };
 
 /**
