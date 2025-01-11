@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import { type Todo, type StateStore, TodoStatus, ThemeMode, type StateRepresentation } from "./types";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { removeTodo, updateState, updateTodo } from "./helpers";
 
 /**
  * Creates a store for app state and actions
@@ -38,63 +39,40 @@ export const useStateStore = create<StateStore>()(
         ...state,
         addTodo: (todo: Todo): void => {
           set((state) => {
-            return {
-              ...state,
-              todos: [...state.todos, todo],
-            };
+            return updateState(state, { todos: [...state.todos, todo] });
           });
         },
         completeTodo: (id: string): void => {
           set((state) => {
-            return {
-              ...state,
-              todos: state.todos.map((item) =>
-                item.id === id ? { ...item, updatedAt: new Date().getTime(), status: TodoStatus.Completed } : item,
-              ),
-            };
+            return updateState(state, {
+              todos: updateTodo(state.todos, id, { status: TodoStatus.Completed }),
+            });
           });
         },
         pauseTodo: (id: string): void => {
           set((state) => {
-            return {
-              ...state,
-              todos: state.todos.map((item) =>
-                item.id === id ? { ...item, updatedAt: new Date().getTime(), status: TodoStatus.Paused } : item,
-              ),
-            };
+            return updateState(state, {
+              todos: updateTodo(state.todos, id, { status: TodoStatus.Paused }),
+            });
           });
         },
         resumeTodo: (id: string): void => {
           set((state) => {
-            return {
-              ...state,
-              todos: state.todos.map((item) =>
-                item.id === id ? { ...item, updatedAt: new Date().getTime(), status: TodoStatus.Pending } : item,
-              ),
-            };
+            return updateState(state, {
+              todos: updateTodo(state.todos, id, { status: TodoStatus.Pending }),
+            });
           });
         },
         deleteTodo: (id: string): void => {
           set((state) => {
-            const newTodos: Todo[] = [];
-            for (let i = 0; i < state.todos.length; i++) {
-              const todo = state.todos[i];
-              if (todo.id !== id) {
-                newTodos.push(todo);
-              }
-            }
-            return {
-              ...state,
-              todos: newTodos,
-            };
+            return updateState(state, { todos: removeTodo(state.todos, id) });
           });
         },
         toggleThemeMode: (): void => {
           set((state) => {
-            return {
-              ...state,
-              themeMode: state.themeMode === ThemeMode.Light ? ThemeMode.Dark : ThemeMode.Light,
-            };
+            return updateState(state, {
+              themeMode: state.themeMode === ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark,
+            });
           });
         },
       };
