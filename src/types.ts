@@ -107,6 +107,13 @@ type Actions = {
   deleteTodo: (id: string) => void;
 
   /**
+   * Sorts todo items stored within the state
+   *
+   * @returns {void}
+   */
+  sortTodos: () => void;
+
+  /**
    * Toggles theme mode
    *
    * @returns {void}

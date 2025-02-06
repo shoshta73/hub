@@ -21,7 +21,7 @@ export const useStateStore = create<StateStore>()(
       return {
         ...state,
         addTodo: (todo: Todo): void => {
-          set((state) => updateState(state, { todos: [...state.todos, todo] }));
+          set((state) => updateState(state, { todos: [todo, ...state.todos] }));
         },
         completeTodo: (id: string): void => {
           set((state) =>
@@ -47,6 +47,9 @@ export const useStateStore = create<StateStore>()(
         deleteTodo: (id: string): void => {
           set((state) => updateState(state, { todos: removeTodo(state.todos, id) }));
         },
+        sortTodos: (): void => {
+          set((state) => updateState(state, { todos: state.todos.sort((a, b) => b.createdAt - a.createdAt) }));
+        },
         toggleThemeMode: (): void => {
           set((state) =>
             updateState(state, {
@@ -59,6 +62,7 @@ export const useStateStore = create<StateStore>()(
     {
       name: "state",
       storage: createJSONStorage(() => localStorage),
+      version: 1,
     },
   ),
 );
